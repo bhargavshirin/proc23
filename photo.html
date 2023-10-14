@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Proctoshield |Edit Profile</title>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="icon" href="images/proc.png" type="image/x-icon" />
+    <link rel="stylesheet" href="edit_profile.css">
+</head>
+<body>
+  <button class="go-back-btn" onclick="goBack()" >X</button>
+  <div id="loading-spinner">
+    <span class="spinner-letter">Ps</span>
+  </div>
+
+    <div class="container">
+        <h2> Student Details</h2>
+        <label for="imageInput">Choose an Image (max 150 KB):</label>
+        <input type="file" id="imageInput" accept=".jpg, .png" onchange="previewImage()"><br>
+
+        <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
+        <button onclick="uploadImage()">Upload Image</button>
+        <br>
+        <br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Name" required readonly><br>
+        
+        <label for="regNo">Registration Number:</label>
+        <input type="text" id="regNo" name="regNo" placeholder="Reg NO" required readonly><br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" placeholder="email" required readonly><br>
+       <div class="subrest">
+        <input type="submit" value="Submit" onclick="goBack()">
+        
+    </div> 
+
+     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="photo.js"></script>
+</body>
+</html>

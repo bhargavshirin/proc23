@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <link rel="stylesheet" href="AddQuestions.css">
+</head>
+
+<body>
+  <button class="go-back-btn" onclick="goBack()">X</button>
+  <div class="container">
+    <h2>Add Questions</h2>
+    <p>Select the Subject :</p>
+    <div class="setting-description">
+    </div>
+    <div class="wrapper-dropdown" id="dropdown">
+      <span class="selected-display" id="destination">None</span>
+      <svg class="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        xmlns="http://www.w3.org/2000/svg" class="transition-all ml-auto rotate-180">
+        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <ul class="dropdown">
+        <li class="item">Cloud Computing</li>
+        <li class="item">Computer Networks</li>
+        <li class="item">Artificial Intelligence</li>
+        <li class="item">Blockchain Technology</li>
+        <li class="item">Data Science</li>
+        <li class="item">Internet of Things</li>
+        <li class="item">Database Management</li>
+        <li class="item">Data Analytics</li>
+        <li class="item">Quantum Computing</li>
+        <li class="item">Web Development</li>
+        <li class="item">Programming with C</li>
+        <li class="item">Python Programming</li>
+
+
+       
+      </ul>
+    </div>
+
+    <h2 id="selectedOptionHeader"></h2>
+    <div id="formContainer">
+      <form id="questionForm0" class="questionForm">
+
+        <label for="question">Question:</label>
+        <input type="text" class="question" required><br>
+
+
+        <label for="options">Options (separated by commas):</label>
+        <input type="text" class="options" required><br>
+        <label for="correctOption">Correct Option:</label>
+        <input type="text" class="correctOption" required><br>
+
+        <button type="submit">Submit Question</button>
+        <button type="button" class="removeButton">Remove</button>
+      </form>
+    </div>
+
+    <button id="multiplyButton">Multiply Form</button>
+    <script src="AddQuestions.js"></script>
+
+    
+</body>
+
+</html>

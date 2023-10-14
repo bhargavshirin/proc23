@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ProctoShield</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+  <script>
+    //    window.addEventListener("DOMContentLoaded", function() {
+    //     const user = JSON.parse(sessionStorage.getItem("user"));
+    //     const quizAccessed = sessionStorage.getItem("quizAccessed");
+
+    //     if (user && user.username==="AuThenticatedUser" &&user.role === "FaCuLtyisaAuthUserAndAllOwed") {
+    //         if (quizAccessed === "true") {
+    //             sessionStorage.removeItem("quizAccessed");
+    //         } 
+    //     } else {
+    //         sessionStorage.clear();
+    //         localStorage.clear();
+    //         window.location.href = "index.html";
+    //     }
+    // });
+  </script>
+  <link rel="stylesheet" href="main.css">
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body>
+  <div id="loading-spinner">
+    <span class="spinner-letter">Ps</span>
+  </div>
+  <div id="content" class="blur">
+    <section class="navigation">
+      <div class="nav-container">
+        <div class="brand">
+          <a href="main.html">
+            <h2>ProctoShield</h2>
+          </a>
+        </div>
+
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+
+        <nav>
+          <ul class="nav-list">
+            <li>
+              <a href="main.html">Home</a>
+            </li>
+            <li>
+              <a href="Instruction.html">Instructions</a>
+            </li>
+            <li>
+              <a href="support.html">Support</a>
+            </li>
+            <li>
+              <div class="profile-container">
+                <div class="profile-image">
+                  <div id="imageContainer"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <div class="hamburger-menu" id="hamburgerMenu">
+      <ul>
+        <li id="userName"></li>
+        <li id="editprofile"><a href="photo.html">Edit Profile</a></li>
+        <li id="signOutButton"></button> <a href="index.html">Logout</a></button></li>
+      </ul>
+    </div>
+    <div class="slide-container">
+
+      <ul class="nav-list">
+        <li>
+
+          <a href="main.html">
+            <h2 style="font-family: Helvetica; color: #ffffff; font-size: 35px; ">
+              ProctoShield
+            </h2>
+          </a>
+
+        </li>
+        <li>
+          <div id="slideImageContainer"></div>
+        </li>
+
+        <li>
+          <H3> Hi, <span id="sname-placeholder"></span></H3>
+        </li>
+        <li>
+          <a href="N0pJ3hTgV5cXqAzH6bZ8mVnG1kC.html">Home</a>
+        </li>
+        <li>
+          <a href="photo.html">Edit profile</a>
+        </li>
+        <li>
+          <a href="support.html">Support</a>
+        </li>
+        <li>
+          <a id="sign-out-button" href="index.html">Sign Out</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="quiz-content">
+      <div class="quiz-options">
+        <div class="quiz-option">
+          <img src="images/addq.svg" alt="" width="200px" height="200px">
+          <h2>Add Questions</h2>
+          <p class="quiz-description">You can add the quiz questions for the subjects here!</p>
+          <a href="AddQuestions.html" class="quiz-btn">Add Questions</a>
+        </div>
+
+        <div class="quiz-option">
+          <img src="images/score.svg" alt="" width="200px" height="200px">
+          <h2>Scores</h2>
+          <p class="quiz-description">You can check the student's Marks here</p>
+          <a href="score.html" class="quiz-btn">PScore</a>
+          <a href="https://docs.google.com/spreadsheets/d/1pDQErf7JoED-278mKH8_QH8HYV5JOZTaia6mZK9DgKI/edit#gid=0"
+            class="quiz-btn" target="_blank">Sheets</a>
+         
+        </div>
+        <div class="quiz-option">
+          <img src="images/te.svg" alt="" width="200px" height="200px">
+          <h2>Edit Quizzes</h2>
+          <p class="quiz-description">You can Edit the quiz questions here!</p>
+          <a href="editquizzes.html" class="quiz-btn">Edit</a>
+        </div>
+        <div class="quiz-option">
+          <img src="images/cheater.svg" alt="" width="200px" height="200px">
+          <h2>Cheaters</h2>
+          <p class="quiz-description">You Can check the cheaters pics here</p>
+          <a href="cheaters.html" class="quiz-btn">View</a>
+        </div>
+        <div class="quiz-option">
+
+          <img src="images/setting.svg" alt="" width="200px" height="200px">
+          <h2>Quiz Settings</h2>
+          <p class="quiz-description">You can change the Quiz Settings here</p>
+          <a href="quizsettings.html" class="quiz-btn">Settings</a>
+        </div>
+        <div class="quiz-option">
+          <img src="images/attempt.svg" alt="" width="200px" height="200px">
+          <h2>Quiz Attempts</h2>
+          <p class="quiz-description">You can extend the quiz attempts to students here</p>
+          <a href="quizattempts.html" class="quiz-btn">Check</a>
+        </div>
+        <div class="quiz-option">
+          <img src="images/sr.svg" alt="" width="200px" height="200px">
+          <h2>Reports</h2>
+          <p class="quiz-description">You can view the student report here</p>
+          <a href="studentreport.html" class="quiz-btn">Report</a>
+        </div>
+
+
+
+        <script src="my.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+        <script src="teacher.js"></script>
+ 
+       
+      </div>
+</body>
+
+</html>

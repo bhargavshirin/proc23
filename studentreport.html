@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/proc.png" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Student Data</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f5f5f5;
+        }
+        header{
+            background-color:#931414;
+            height: 50px;
+        }
+        h1 {
+            color: #931414;
+            margin-top: 6rem;
+            font-family: 'Roboto', sans-serif;
+        }
+        .go-back-btn {
+            background-color: #931414;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 20px;
+            position: absolute;
+            top: 4rem;
+            left: 10px;
+            cursor: pointer;
+        }
+
+        .go-back-btn:hover {
+            background-color: #b32626;
+            color: #ffffff;
+        }
+
+        canvas {
+            max-width: 600px;
+            /* Set the maximum width */
+            max-height: 350px;
+            /* Set the maximum height */
+            width: 100%;
+            /* Make the canvas responsive */
+            height: auto;
+        }
+
+        #chartContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            margin: 5% auto;
+            flex-wrap: wrap;
+            max-width: 1200px;
+        }
+
+        #barChart {
+            padding: 2rem;
+            max-width: 600px;
+            margin-top: 1rem;
+            border: solid 2px rgb(24, 24, 24);
+            border-radius: 5px;
+        }
+
+        #pieChart {
+            max-width: 400px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: solid 2px rgb(24, 24, 24);
+            border-radius: 5px;
+        }
+
+        #chartContainer canvas {
+            margin: 10px;
+        }
+
+        #chartContainer canvas:first-child {
+            margin-left: 0;
+        }
+
+        .footer{
+            background-color: #931414;
+            height: 50px;
+            margin-top: 6.1rem;
+            text-align:center;color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <button class="go-back-btn" onclick="goBack()">X</button>
+    <h1 style="text-align: center;">Student Report</h1>
+    <div id="chartContainer">
+        <canvas id="barChart"></canvas>
+        <canvas id="pieChart"></canvas>
+    </div>
+    <div class="footer">
+        © 2023 ProctoShield - All Rights Reserved.<br/>
+    </div>
+
+    <script>
+        // Function to fetch data from the API and draw charts
+        function fetchDataAndDrawCharts() {
+            // Fetch data from the API
+            fetch('https://sheet.best/api/sheets/c24d0b28-bcab-443a-8344-369e33269500')
+                .then(response => response.json())
+                .then(data => {
+                    // Extract "name," "score," and "malpractice" columns from the API data
+                    const labels = data.map(item => item.name);
+                    const scores = data.map(item => item.score);
+                    let malpracticeData = data.map(item => item.malpractice);
+
+                    // Replace null values in malpracticeData with "No Cheating"
+                    malpracticeData = malpracticeData.map(value => (value === null ? 'No Cheating' : value));
+
+                    // Create a Chart.js bar chart to show the frequency of scores
+                    const scoreCounts = {};
+                    scores.forEach(score => {
+                        if (scoreCounts[score]) {
+                            scoreCounts[score]++;
+                        } else {
+                            scoreCounts[score] = 1;
+                        }
+                    });
+
+                    const labelsAndScores = Object.keys(scoreCounts).map(score => `${score}`);
+                    const frequencies = Object.values(scoreCounts);
+
+                    const barChartCanvas = document.getElementById('barChart').getContext('2d');
+                    const barChart = new Chart(barChartCanvas, {
+                        type: 'bar',
+                        data: {
+                            labels: labelsAndScores,
+                            datasets: [{
+                                label: 'Frequency',
+                                data: frequencies,
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: '<---Score--->'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: '<---Frequency--->'
+                                    },
+                                    suggestedMax: Math.max(...frequencies) + 1,
+                                }
+                            }
+                        }
+                    });
+
+                    // Create a Chart.js pie chart to show malpractice data
+                    const malpracticeCounts = {};
+                    malpracticeData.forEach(malpractice => {
+                        if (malpracticeCounts[malpractice]) {
+                            malpracticeCounts[malpractice]++;
+                        } else {
+                            malpracticeCounts[malpractice] = 1;
+                        }
+                    });
+
+                    const pieChartCanvas = document.getElementById('pieChart').getContext('2d');
+                    const pieChart = new Chart(pieChartCanvas, {
+                        type: 'pie',
+                        data: {
+                            labels: Object.keys(malpracticeCounts),
+                            datasets: [{
+                                data: Object.values(malpracticeCounts),
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.6)',
+                                    'rgba(54, 162, 235, 0.6)',
+                                    'rgba(255, 206, 86, 0.6)',
+                                    'rgba(75, 192, 192, 0.6)',
+                                    'rgba(153, 102, 255, 0.6)',
+                                    'rgba(255, 159, 64, 0.6)',
+                                    // Add more colors as needed
+                                ]
+                            }]
+                        },
+                        options: {
+                            tooltips: {
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        const dataset = data.datasets[tooltipItem.datasetIndex];
+                                        const total = dataset.data.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+                                        const currentValue = dataset.data[tooltipItem.index];
+                                        const percentage = ((currentValue / total) * 100).toFixed(2);
+                                        return data.labels[tooltipItem.index] + ': ' + percentage + '%';
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        // Call the fetchDataAndDrawCharts function to fetch data and draw both bar and pie charts
+        fetchDataAndDrawCharts();
+
+        const goBack = () => {
+            window.history.back();
+        };
+      
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proctoshield</title>
+
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+
+  <link rel="stylesheet" href="index.css">
+ <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <script src="index.js" type="module"></script>
+  <link rel="stylesheet" href="index.css">
+  
+</head>
+<body>
+  <div id="loading-spinner">
+    <span class="spinner-letter">Ps</span>
+  </div>
+
+  <div class="header"></div>
+  <div class="title">
+    <h1>ProctoShield</h1>
+  </div>
+  <div id="custom-alert" class="custom-alert">
+    <div class="custom-alert-content">
+        <span id="custom-alert-message">This is a custom alert.</span>
+        <button id="custom-alert-okay">Okay</button>
+    </div>
+</div>
+
+   
+   <div class="picture">
+    <img src="images/ind.svg">
+  </div>
+  <div class="center-box" id="login-div">
+    <h2>ProctoShield</h2>
+    <input type="email" id="login-email" class="text-field" name="login-email" placeholder="Email" required/><br>
+    <input type="password" id="login-password" class="text-field" name="login-password" placeholder="Password" required/><br>
+    <button id="login-btn" class="btn-style">Login</button>
+
+    <h4>────────── or ──────────</h4>
+    <button type="button" class="btn" id="google-signin-btn" >
+      Sign in with Google
+    </button><br>
+    <button id="reg-btn" class="an-btn">Don't have an account? Register</button>
+</div>
+
+
+  <div class="center-box" id="register-div">
+   
+    <h2>Signup</h2>
+    
+    <input type="text" id="register-name" class="text-field" name="register-name" placeholder="Name" required/><br>
+    
+    <input type="text" id="register-regnumber" class="text-field" name="register-regnumber" placeholder="Registration Number" oninput="convertToUppercaseAndRemoveSpaces(this)" required maxlength="20"required><br>
+        <input type="email" id="register-email" class="text-field" name="register-email" placeholder="Email" required/>
+        <span id="email-error" style="color: red;"></span>
+        <br>
+    <input type="password" id="register-password" class="text-field" name="register-password" placeholder="Password" required/><br>
+    <button id="register-btn" class="btn-style">Register</button><br>
+    <button id="log-btn" class="an-btn">Have an account? Login</button>
+  </div>
+  <div id="result-box">
+    <h3 id="result"></h3><br>
+    <button id="log-out-btn" class="btn-style">Back</button>
+  </div>
+
+<footer>
+  © 2023 ProctoShield - All Rights Reserved.<br/>
+</footer>
+<script>
+function convertToUppercaseAndRemoveSpaces(inputElement) {
+    const cleanedValue = inputElement.value.replace(/\s/g, '');
+    const uppercaseValue = cleanedValue.toUpperCase();
+    inputElement.value = uppercaseValue;
+    if (inputElement.value.length > 20) {
+      inputElement.value = inputElement.value.slice(0, 20);
+    }
+  }
+  document.getElementById('register-name').addEventListener('input', function() {
+    let inputText = this.value;
+    let formattedText = inputText
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    this.value = formattedText;
+  });
+  const customAlert = document.getElementById("custom-alert");
+        const customAlertMessage = document.getElementById("custom-alert-message");
+        const customAlertOkayButton = document.getElementById("custom-alert-okay");
+
+        function showCustomAlert(message) {
+            customAlertMessage.textContent = message;
+            customAlert.style.display = "flex";
+        }
+
+        function hideCustomAlert() {
+            customAlert.style.display = "none";
+        }
+
+        customAlertOkayButton.addEventListener("click", hideCustomAlert);
+</script>
+</body>
+</html>
+
+
+
+
+

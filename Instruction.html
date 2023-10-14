@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/proc.png" type="image/x-icon" />
+    <title>Instructions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body{
+            background-color: #f1f5f9;
+        }
+        header{
+            color:#fff;
+            text-align: center;
+            background-color: #c41616;
+            font-size: 2.5rem;
+            margin: 2rem 0;
+            margin-top: 0;
+            /* box box-shadow only buttom */
+            box-shadow: 0 10px 10px rgba(0,0,0,0.4);
+        }
+
+        h2{
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #c41616;
+        }
+        hr{
+            width: 100px;
+            height: 3px;
+            background-color: #c41616;
+            border: none;
+            margin-bottom: 1rem;
+        }
+        .Rules-Regulations{
+            width: 80%;
+            margin: auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .Rules-Regulations p{
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .requirements{
+            width: 80%;
+            margin: auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        .requirements h2{
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .requirements ul li{
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .Rules{
+            width: 80%;
+            margin: auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        .Rules h2{
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .Rules ul li{
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-details{
+            width: 80%;
+            margin: auto;
+            padding: 2rem;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        .developer-details hr{
+            margin-left: 40%;
+            width: 20%;
+
+
+        }
+
+        .card{
+            display: flex;
+            width: 60%;
+            height: 300px;
+            margin: auto;
+            margin-bottom: 2rem;
+            perspective: 1000px;
+        }
+
+        .card .inner{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover .inner{
+            transform: rotateY(180deg);
+        }
+
+        .card .inner .front,
+        .card .inner .back{
+            position: absolute;
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .card .inner .front{
+            /* add linear background mix of marron and some other */
+
+            background: linear-gradient(135deg, #c41616, #fff);
+            border: #c41616 1px solid;
+            color: #333;
+        }
+
+        .card .inner .front img{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-top: 50px;
+        }
+
+        .card .inner .front .developer-name{
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .card .inner .back{
+            background-color: #c41616;
+            color: #fff;
+            transform: rotateY(180deg);
+        }
+
+        .card .inner .back p{
+            font-size: 1.2rem;
+            line-height: 1.5;
+            padding: 1rem;
+        }
+
+        .social-media-links{
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .social-media-links a{
+            color: #333;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+
+        .social-media-links a:hover{
+            color: #c41616;
+        }
+
+        @media screen and (max-width: 768px){
+            .card{
+                width: 45%;
+            }
+        }
+        @media screen and (max-width: 576px){
+            .card{
+                width: 100%;
+            }
+        }
+        </style>
+
+</head>
+<body>
+    <header>Instructions</header>
+    <div class="Rules-Regulations">
+        <img src="images/ind.svg" alt="Instructions" style="width: 100%; height: 300px; margin-bottom: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <p>
+            The following rules and regulations apply to all students. The goal of this platform is 
+            to provide a safe and secure environment for all students to learn and grow.
+        </p>
+    </div>
+    <div class="requirements">
+        <h2>Requirements : </h2>
+        <hr><br>
+        <ul>
+            <li>Students must have a stable internet connection to access the exam platform.(Min 100kb/s)</li>
+            <li>Students must have a webcam to access the exam platform.</li>
+            <li>Students must have a microphone to access the exam platform.</li>
+            <li>Students must required a silent place to write the exam.</li>
+            <li>Students must have a computer or Moblile or Tablet to access the exam platform.</li>
+            <li>Students must have a valid ID (Aadhaar Card, Student ID) to access the exam .</li>
+            <li>Students must have a valid phone number to access the exam platform.</li>
+        </ul>
+    </div>
+    <div class="Rules">
+        <h2>Proctoring Related:</h2>
+        <hr><br>
+        <!-- few point as it is ai based monotring system so for that same alerts  -->
+        <ul>
+            <li>Your face will be verified before the start of the assessment from the photo that was captured during registration</li>
+            <li>Students must not use any other device while writing the exam.</li>
+            <li>Students must not use any other browser while writing the exam.</li>
+            <li>Students must not use any other tab while writing the exam.</li>
+            <li>Students must not use any other application while writing the exam.</li>
+            <li>Students must not use any other person while writing the exam.</li>
+            <li>Students must not use any other calculator while writing the exam.</li>
+            <li>Students must not use any other mobile while writing the exam.</li>
+        </ul>
+    </div>
+    <div class="developer-details">
+        <h2>Meet Our Developers</h2>
+        <hr><br>
+           <!-- Developer 1 -->
+           <div class="card">
+            <div class="inner">
+                <div class="front">
+                    <img src="images/Bhargav.jpg" alt="Developer 1" class="developer-photo">
+                    <div class="developer-name">Bhargav Shirin Nalamati</div>
+                </div>
+                <div class="back">
+                    <p>
+                        Hi there! I'm a computer science and engineering student with a passion for cloud computing. I'm constantly seeking to learn more about the latest advancements in this field and exploring ways to apply them to real-world problems. My coursework has equipped me with a solid foundation in programming languages like C, Python and Java as well as Data structures and Algorithms.
+
+                        In addition to my studies, I've also completed several cloud computing certifications that have allowed me to gain hands-on experience with cloud platforms like Google Cloud, AWS and Azure. 
+                </div>
+            </div>
+            <!-- Social Media Links Below the Card -->
+            <div class="social-media-links">
+                <a href="" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/bhargav-shirin-nalamati-34092a263/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <!-- Developer 2 -->
+        <div class="card">
+            <div class="inner">
+                <div class="front">
+                    <img src="images/praneeth.jpeg" alt="Developer 2" class="developer-photo">
+                    <div class="developer-name">Yamagani sai praneeth</div>
+                </div>
+                <div class="back">
+                    <p>
+                        Hi, I'm Praneeth, a full-time Computer Science student with a major focus on information technology, programming, computer networks and operating systems. I'm an enthusiastic CyberSecurity aspirant. I'm more passionate in learning new things in the domain and eagerly waiting to apply the knowlege in real world problems. I wanted to see myself as a Cybersecurity professional. 
+                    </p>
+                </div>
+            </div>
+            <!-- Social Media Links Below the Card -->
+            <div class="social-media-links">
+                <a href="" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://linkedin.com/in/developer2" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="inner">
+                <div class="front">
+                    <img src="images/fokou.jpeg" alt="Developer 2" class="developer-photo">
+                    <div class="developer-name">Fokou Ngoumo Hilux</div>
+                </div>
+                <div class="back">
+                    <p>
+                        Hi, I'm Hilux, a full-time Computer Science student with a major focus on information technology, programming, computer networks and operating systems. I'm an enthusiastic CyberSecurity aspirant. I'm more passionate in learning new things in the domain and eagerly waiting to apply the knowlege in real world problems. I wanted to see myself as a Cybersecurity professional. 
+                    </p>
+                </div>
+            </div>
+            <!-- Social Media Links Below the Card -->
+            <div class="social-media-links">
+                <a href="" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://linkedin.com/in/developer2" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="inner">
+                <div class="front">
+                    <img src="images/sudh.jpg" alt="Developer 2" class="developer-photo">
+                    <div class="developer-name">Sudhanshu</div>
+                </div>
+                <div class="back">
+                    <p>
+                        Hi, I'm Sudhanshu, a full-time Computer Science student with a major focus on information technology, programming, computer networks and operating systems. I'm an enthusiastic CyberSecurity aspirant. I'm more passionate in learning new things in the domain and eagerly waiting to apply the knowlege in real world problems. I wanted to see myself as a Cybersecurity professional. 
+                    </p>
+                </div>
+            </div>
+            <!-- Social Media Links Below the Card -->
+            <div class="social-media-links">
+                <a href="" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://linkedin.com/in/developer2" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <!-- Developer 3 -->
+        <div class="card">
+            <div class="inner">
+                <div class="front">
+                    <img src="images/profile .jpg" alt="Developer 3" class="developer-photo">
+                    <div class="developer-name">Aditya Kumar Prajapati</div>
+                </div>
+                <div class="back">
+                    <p>
+                        I am currently a student at Gandhi Institute of Technology and Management (GITAM) in Bengaluru, India. I am pursuing a Bachelor of Computer Applications (BCA) degree and I have always been interested in technology and programming, and the field of Cloud Computing has always fascinated me with its vast potential and opportunities.
+
+                        Throughout my studies, I have had the opportunity to learn about the various technologies and platforms used in Cloud Computing, such as Amazon Web Services, Microsoft Azure, and Google Cloud.
+                        
+                </div>
+            </div>
+            <!-- Social Media Links Below the Card -->
+            <div class="social-media-links">
+                <a href="" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/adityakumarprajapati/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+</div> 
+</body>
+</html>

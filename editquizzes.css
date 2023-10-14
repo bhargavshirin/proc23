@@ -1,0 +1,151 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+label {
+  position: absolute; /* Position absolutely */
+  top: 10px; /* Adjust the top value to position it below the select */
+}
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  position: absolute; /* Position absolutely */
+  top: 30px; /* Adjust the top value as needed to position it above the label */
+}
+
+/* Style the dropdown arrow (optional) */
+select::after {
+  content: '\25BC'; /* Unicode character for a downward-pointing triangle */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+#data-list {
+  margin-top: 5.5rem;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.data-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+   /* buttonstyle */
+   .go-back-btn{
+    background-color: #980909;
+    border: none;
+  
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    border-radius: 5px;
+  }
+.field-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.field-list li {
+  margin: 5px 0;
+}
+
+strong {
+  color: #007bff;
+}
+
+/* ... Existing styles ... */
+
+/* ... Existing styles ... */
+
+.field-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.field-table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.field-table td:first-child {
+  font-weight: bold;
+  background-color: #f0f0f0;
+  white-space: nowrap;
+}
+
+.field-table tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+/* ... Existing styles ... */
+/* ... Existing styles ... */
+
+.edit-button,
+.save-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #007bff;
+}
+
+.editable input {
+  width: 100%;
+}
+
+/* ... Existing styles ... */
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+/* mobile */
+@media only screen and (max-width: 768px) {
+  #data-list {
+    width: 100%;
+    margin-top:6rem;
+  }
+  .go-back-btn{
+    position: fixed;
+    border-radius: 15%;
+  }
+
+
+}

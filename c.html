@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Programming with C</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+ <script src="noise.js"></script>
+  <link rel="stylesheet" href="allquiz.css">
+
+  <script>
+      window.addEventListener("DOMContentLoaded", function() {
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        sessionStorage.setItem("quizAccessed", "true");
+    
+
+        if (user && user.username==="AuThenticatedUser" &&user.role === "AuthUserVerified") {
+          localStorage.setItem("QuIzIseNtRED", "true");
+           
+            
+        } else {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    });
+
+</script>
+</head>
+<body>
+  <div class="header"></div>
+  <button class="go-back-btn" onclick="confirmGoBack()">Exit</button>
+  <div id="customConfirmModal" class="modal">
+    <div class="modal-content">
+        <p>Do you want to exit the quiz?</p>
+        <button id="confirmButton">Confirm</button>
+        <button id="cancelButton">Cancel</button>
+    </div>
+</div>
+  <div class="container" >
+    <div id="loading-spinner">
+      <span class="spinner-letter">Ps</span>
+    </div>
+    <div id="custom-alert" class="custom-alert">
+      <div class="custom-alert-content">
+          <span id="custom-alert-title">Warning ⚠️</span><br>
+          <span id="custom-alert-message">This is a custom alert.</span>
+          <button id="custom-alert-okay">Okay</button>
+      </div>
+  </div>
+    <div class="custom-alertx" id="customAlert">
+      Warning: Noise detected!
+  </div>
+    <form id="name-form">
+      <div class="quiz-container">
+        <img src="images/c2.svg" alt="Cloud Computing Quiz" class="quiz-image">
+        <h1 class="quiz-heading">Programming with C</h1>
+      </div>
+      <i class="fa fa-asterisk" style="font-size:8px;color:red ;float:right; margin-right:27.5rem;" ></i> <label for="name">Enter Your Roll No. : </label>
+      <input type="text" id="name" name="name" required readonly>
+      <button type="button" id="st-btn"class="btn btn-success" onclick="startQuizWrapper('Programming with C')">Start Quiz</button>
+      <p class="note"><span class="star">*</span>Note:You are being continuously Monitered!</p>
+    </form>
+
+      
+    <div id="quiz" style="display:none;"></div>
+    <div id="score" style="display:none;"></div>
+  </div>
+  <footer>
+   <p>ProctoShield V1.4.0</p><br/>
+  </footer>
+  
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script src="dateandtime.js"></script>
+  <script src="cloudquiz.js"></script>
+  <script src="vision.js"></script>
+  <script src="spinner.js"></script>
+  <script src="disable.js"></script>
+
+  <script>
+        const enterFullscreenButton = document.getElementById('st-btn');
+        enterFullscreenButton.addEventListener('click', () => {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+            fullscreenPrompt.style.display = 'none';
+        });
+        function confirmGoBack() {
+    var customConfirmModal = document.getElementById('customConfirmModal');
+    var confirmButton = document.getElementById('confirmButton');
+    var cancelButton = document.getElementById('cancelButton');
+
+    customConfirmModal.style.display = 'block';
+
+    confirmButton.onclick = function () {
+        goBack();
+        customConfirmModal.style.display = 'none';
+    };
+
+    cancelButton.onclick = function () {
+        customConfirmModal.style.display = 'none';
+    };
+}
+
+function goBack() {
+    location.href = "main.html";
+}
+
+   </script> 
+</body>
+</html>

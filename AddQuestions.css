@@ -1,0 +1,294 @@
+
+.header{
+  height: 20px;
+  width: 100%;
+  background-color: #b1040e;
+  z-index: 999;
+}
+
+#formContainer {
+text-align: center;
+}
+
+.questionForm {
+width: 457px;
+margin: 0 auto;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+background-color: #f9f9f9;
+margin-bottom: 20px;
+}
+
+label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+float: left;
+padding-left: 10px;
+}
+
+
+input[type="text"] {
+height:30px;
+width: 90%;
+padding: 10px;
+margin-bottom: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+/* Style for the submit button */
+button[type="submit"] {
+padding: 10px 20px;
+background-color: #28a745;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+button[type="submit"]:hover {
+background-color: #218838;
+}
+
+#multiplyButton {
+display: block;
+margin: 20px auto;
+padding: 10px 20px;
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+#multiplyButton:hover {
+background-color: #0056b3;
+}
+.removeButton {
+padding: 8px 16px;
+background-color: #b1040e;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.removeButton:hover {
+background-color: #c82333;
+}
+h1 {
+  text-align: center;
+  margin-top: 20px;
+
+}
+h2 {
+  text-align: center;
+  /* margin-top: 5px; */
+  color:#000000;
+  font-size: 1.5rem;
+}    
+
+
+
+ /* Styles for the body element */
+ body {
+  background-color: #f2f2f2;
+  font-family: Arial;
+  margin-top:4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for the container */
+.container {
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0 auto;
+  display: block;
+  min-width: 231.5px;
+  width: 100% !important;
+  max-width: 483px;
+}
+p{
+  margin-top: 2ch;
+  color:#b1040e;
+  font-size: 1.2rem;
+}
+
+/* Styles for the dropdown heading */
+.setting-description {
+  background-color: #b1040e;
+  min-width: 231.5px;
+  width: 100% ;
+  max-width: 483px;
+}
+
+
+/* Styles for the dropdown menu */
+.wrapper-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  border-radius: 5px;
+  height: 2.5rem;
+  background: #b1040e;
+  text-align: left;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 20px;
+  font-family: Arial;
+  padding-top: 1.5rem;
+}
+
+/* Styles for the arrow icon */
+.arrow {
+  margin-left: 10px;
+  margin-right: 10px;
+  float: right;
+}
+
+/* Styles for the selected option display */
+.selected-display {
+  margin-left: 20px;
+}
+
+/* Styles for the dropdown arrow */
+svg {
+  transition: all 0.3s;
+}
+
+.wrapper-dropdown::before {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  margin-top: -2px;
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #fff transparent;
+}
+
+/* Styles for the rotated arrow */
+.rotated {
+  transform: rotate(-180deg);
+}
+
+/* Styles for the dropdown menu */
+.wrapper-dropdown .dropdown {
+  transition: 0.3s;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 99;
+  box-shadow: inherit;
+  border-radius: 5px;
+  background: inherit;
+  transform-origin: top;
+  user-select: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Styles for dropdown items */
+.wrapper-dropdown .dropdown li {
+  padding: 0 15px;
+  line-height: 45px;
+  overflow: hidden;
+}
+
+.wrapper-dropdown .dropdown li:last-child {
+  border-bottom: none;
+}
+
+/* Styles for hover effect on dropdown items */
+.wrapper-dropdown .dropdown li:hover {
+  background-color: #ea0510;
+}
+
+/* Styles for active dropdown */
+.wrapper-dropdown.active .dropdown {
+  opacity: 1;
+  visibility: visible;
+}
+
+.go-back-btn {
+  background-color: #b1040e;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  display: block;
+  margin: 2rem;
+  font-size: 16px;
+}
+
+.go-back-btn:hover {
+  background-color: #d32f2f;
+}
+
+.go-back-btn:active {
+  background-color: #c62828;
+}
+
+footer{
+  position: fixed;
+  text-align: center;
+  padding-top: 0.6rem;
+  left: 0;
+  bottom: 0;
+  background-color: #b1040e;
+  color: #fff;
+  width: 100%;
+  height: 1.5rem;
+}
+
+
+
+/* Styles for mobile responsiveness */
+@media (max-width: 768px) {
+  body{
+    margin-top: 20%;
+  }
+  .container {
+      max-width: 90%;
+  }
+
+  .questionForm {
+      width: 93%;
+  }
+
+  .wrapper-dropdown .dropdown {
+      top: 100%;
+  }
+
+  .setting-description {
+      min-width: auto;
+  }
+
+  .selected-display {
+      margin-left: 1rem;
+  }
+
+  .wrapper-dropdown.active .dropdown {
+      top: 110%;
+  }
+
+  .go-back-btn{
+    margin: 1rem;
+    border-radius: 15%;
+  }
+}
+

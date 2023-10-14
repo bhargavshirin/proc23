@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.image-card {
+    border: 1px solid #ccc;
+    padding: 5px;
+    /* Adjust padding as needed */
+    text-align: center;
+    /* Adjust the width to match your desired size */
+    box-sizing: border-box;
+}
+
+.image-card img {
+    max-width: 250px;
+    max-height: 250px;
+}
+
+/* mobile */
+@media (max-width: 600px) {
+    .image-card {
+        width: 100%;
+    }
+
+    .image-card img{
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .image-container{
+        padding: 0;
+        margin: auto !important;;
+        }   
+}

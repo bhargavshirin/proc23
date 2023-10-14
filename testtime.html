@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Condition Checker</title>
+</head>
+<body>
+  <h1>Condition Checker</h1>
+  <button id="checkButton">Check Conditions</button>
+
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+  <script>
+    // Initialize Firebase with your configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyDuWMgZzdi1XUkF5K9n2QJnmNM6nADD0Js",
+  authDomain: "proctoshield-8eaf3.firebaseapp.com",
+  databaseURL: "https://proctoshield-8eaf3-default-rtdb.firebaseio.com",
+  projectId: "proctoshield-8eaf3",
+  storageBucket: "proctoshield-8eaf3.appspot.com",
+  messagingSenderId: "27994814767",
+  appId: "1:27994814767:web:e4cc3c9315633df85949da"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+const collectionId = 'settings';
+const documentId = 'YKLuGYQhST88XFcaqLpP';
+
+function isDateBetween(startDate, endDate, checkDate) {
+      return startDate <= checkDate && checkDate <= endDate;
+    }
+
+    function isTimeBetween(startTime, endTime, checkTime) {
+      return startTime <= checkTime && checkTime <= endTime;
+    }
+
+    function convertTo24HourFormat(time, period) {
+      let [hours, minutes] = time.split(':');
+      if (period === 'PM' && hours !== '12') {
+        hours = (parseInt(hours) + 12).toString();
+      }
+      return `${hours}:${minutes}`;
+    }
+
+    function convertTo12HourFormat(time) {
+      let [hours, minutes] = time.split(':');
+      let period = 'AM';
+      if (parseInt(hours) >= 12) {
+        period = 'PM';
+        if (parseInt(hours) > 12) {
+          hours = (parseInt(hours) - 12).toString();
+        }
+      }
+      return `${hours}:${minutes} ${period}`;
+    }
+
+    function checkConditionsAndAlert() {
+      const docRef = db.collection(collectionId).doc(documentId);
+      docRef.get()
+        .then((documentSnapshot) => {
+          if (documentSnapshot.exists) {
+            const documentData = documentSnapshot.data();
+            console.log('Fetched Document Data:', documentData);
+
+            const currentDate = new Date();
+            console.log('Current Date:', currentDate);
+
+            const currentDateString = currentDate.toISOString().split('T')[0];
+            console.log('Current Date String:', currentDateString);
+
+            const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: true });
+            console.log('Current Time:', currentTime);
+
+            const startDate = documentData.startDate;
+            console.log('Start Date:', startDate);
+
+            const endDate = documentData.endDate;
+            console.log('End Date:', endDate);
+
+            const startTime = convertTo12HourFormat(documentData.startTime);
+            console.log('Start Time (12h format):', startTime);
+
+            const endTime = convertTo12HourFormat(documentData.endTime);
+            const endTimeAMPM = documentData.endTimeAMPM;
+            console.log('End Time (12h format):', `${endTime} ${endTimeAMPM}`);
+
+            if (
+              (startDate === currentDateString || isDateBetween(startDate, endDate, currentDateString)) &&
+              (startTime === currentTime || isTimeBetween(startTime, endTime, currentTime))
+            ) {
+              alert('User is allowed.');
+            } else {
+              alert('User is not allowed.');
+            }
+          } else {
+            alert('Document not found');
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching document:', error);
+        });
+    }
+
+    const checkButton = document.getElementById('checkButton');
+    checkButton.addEventListener('click', checkConditionsAndAlert);
+  </script>
+</body>
+</html>

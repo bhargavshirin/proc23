@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhar Detection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #931414;
+            margin-top: 4rem;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        P {
+            margin-top: 0.5rem;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+
+        }
+
+        .result {
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5rem;
+            color: #931414;
+        }
+
+        /* Add your CSS styling here as needed */
+        .cameraContainer {
+            background-color: black;
+            width: 640px;
+            /* You can adjust the width as needed */
+            max-width: 100%;
+            /* Ensure it doesn't exceed the viewport width */
+            height: 480px;
+            /* You can adjust the height as needed */
+            margin: 40px auto;
+            /* Center the container horizontally and add margin top */
+            display: flex;
+            border-radius: 10px;
+            justify-content: center;
+            /* Center the video horizontally */
+            align-items: center;
+            /* Center the video vertically */
+        }
+
+        #greenCircle {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(247, 247, 247);
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn1 {
+            background-color: #931414;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            position: absolute;
+            top: 8rem;
+            left: 42%;
+            cursor: pointer;
+        }
+
+        .btn2 {
+            background-color: #931414;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            position: absolute;
+            top: 8rem;
+            left: 50%;
+            cursor: pointer;
+        }
+        .custom-alert {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-alert-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#custom-alert-okay {
+  margin-top: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 50px;
+}
+
+#custom-alert-okay:hover {
+  background-color: #0056b3;
+}
+
+        /* mobile  */
+        @media only screen and (max-width: 678px) {
+            .cameraContainer {
+                width: 100%;
+                height: 450px;
+            }
+
+            body {
+                margin: 10px;
+            }
+
+            p {
+                padding: 1rem;
+            }
+
+            .btn1 {
+                background-color: #931414;
+                color: #ffffff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 15px;
+                position: absolute;
+                top: 11rem;
+                left: 25%;
+                cursor: pointer;
+            }
+            .btn2 {
+                background-color: #931414;
+                color: #ffffff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 15px;
+                position: absolute;
+                top: 11rem;
+                left: 50%;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Identity Verification</h1>
+    <p>Turn On your Camera and Verify your ID. (Valid Ids : Aadhaar, GITAM ID)</p>
+    <button class="btn1" onclick="startCamera()">Start Camera</button>
+    <button class="btn2" onclick="stopCamera()">Stop Camera</button>
+    <div id="custom-alert" class="custom-alert">
+        <div class="custom-alert-content">
+            <span id="custom-alert-message">This is a custom alert.</span>
+            <button id="custom-alert-okay">Okay</button>
+        </div>
+    </div>
+    <div id="cameraContainer" class="cameraContainer">
+        <video id="cameraFeed" autoplay playsinline></video>
+    </div>
+
+    <div id="result"></div>
+    <div id="greenCircle"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@google-cloud/vision"></script>
+    <script>
+  const customAlert = document.getElementById("custom-alert");
+const customAlertMessage = document.getElementById("custom-alert-message");
+const customAlertOkayButton = document.getElementById("custom-alert-okay");
+
+function showCustomAlert(message) {
+  customAlertMessage.textContent = message;
+  customAlert.style.display = "flex";
+}
+
+function hideCustomAlert() {
+  customAlert.style.display = "none";
+}
+
+customAlertOkayButton.addEventListener("click", hideCustomAlert);
+        // script.js
+        let videoStream;
+        let videoElement;
+        let detectionStopped = false;
+        const regnumber = localStorage.getItem('regnumber');
+        const name = localStorage.getItem('sname');
+        const nameWords = name.split(' ');
+        const d = [
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+            [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+            [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+            [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+            [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+            [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+            [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+            [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+        ]
+        const p = [
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+            [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+            [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+            [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+            [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+            [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+            [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+        ]
+
+        function validate(aadharNumber) {
+            let c = 0
+            let invertedArray = aadharNumber.split('').map(Number).reverse()
+
+            invertedArray.forEach((val, i) => {
+                c = d[c][p[(i % 8)][val]]
+            })
+
+            return (c === 0)
+        }
+        async function startCamera() {
+            videoElement = document.getElementById('cameraFeed');
+            const resultDiv = document.getElementById('result');
+            const greenCircle = document.getElementById('greenCircle');
+            try {
+
+                videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videoElement.srcObject = videoStream;
+
+                videoElement.onplay = async () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = videoElement.videoWidth;
+                    canvas.height = videoElement.videoHeight;
+                    const context = canvas.getContext('2d');
+
+                    const checkText = async () => {
+                        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                        const imageDataURL = canvas.toDataURL('image/jpeg');
+
+                        const apiKey = 'AIzaSyC3c8KGz4nnBVLncJ_M9wZGNVO8n9ibZj8'; 
+                        try {
+                            const response = await fetch('https://vision.googleapis.com/v1/images:annotate?key=' + apiKey, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    requests: [
+                                        {
+                                            image: {
+                                                content: imageDataURL.split(',')[1],
+                                            },
+                                            features: [
+                                                {
+                                                    type: 'TEXT_DETECTION',
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                }),
+                            });
+
+                            if (!response.ok) {
+                                throw new Error('Error calling Google Cloud Vision API');
+                            }
+
+                            const data = await response.json();
+                            const aadharRegex = /(\d{4} \d{4} \d{4})/;
+                            if (data.responses && data.responses.length > 0 && !detectionStopped) {
+                                const detectedText = data.responses[0].textAnnotations[0].description;
+                                const nameFound = nameWords.some(word => detectedText.includes(word));
+                                const matches = detectedText.match(aadharRegex);
+                                console.log(detectedText);
+                                const detectedAadharNumber = matches[0].replace(/\s/g, '');
+
+                                // console.log(regnumber);
+
+                                if (
+                                    // (detectedText.includes(regnumber) && detectedText.includes("GITAM")) ||
+                                    (nameFound && detectedText.includes("GOVT. OF INDIA")) ||
+                                    (nameFound && detectedText.includes(regnumber) && detectedText.includes("GITAM"))|| 
+                                    (nameFound && detectedText.includes("REPUBLIC OF INDIA")) ||
+                                    (nameFound && detectedText.includes("Government of India") && validate(detectedAadharNumber))
+                                ) {
+
+                                    resultDiv.innerHTML = `<div style="font-size: 24px; font-family: Arial, sans-serif; color: green; font-weight: bold; text-align: center;">User Verified, Redirecting......</div>`;
+
+                                    greenCircle.style.opacity = 1;
+                                    greenCircle.removeEventListener('click', redirectToOtherPage); // Remove the click event listener
+                                    detectionStopped = true; // Stop further detection
+                                    redirectToOtherPage(); // Automatically redirect
+                                } else {
+                                    resultDiv.innerHTML = `<div style="font-size:24px;font-family: Arial, sans-serif;color: red; font-weight: bold; text-align:center;">Unable to Verify ID.</div>`;
+                                    greenCircle.style.opacity = 0;
+                                    greenCircle.removeEventListener('click', redirectToOtherPage);
+                                }
+                            } else {
+                                resultDiv.innerHTML = `<div style="font-size:24px;font-family: Arial, sans-serif;color: red; font-weight: bold; text-align:center;">Please hold the ID properly.</div>`;
+                                greenCircle.style.opacity = 0;
+                                greenCircle.removeEventListener('click', redirectToOtherPage);
+                            }
+                        } catch (error) {
+                            console.error('Error calling Google Cloud Vision API:', error);
+                        }
+
+                        if (!detectionStopped) {
+                            requestAnimationFrame(checkText);
+                        }
+                    };
+
+                    checkText();
+                };
+            } catch (error) {
+                showCustomAlert('Error accessing camera');
+            }
+        }
+
+        function stopCamera() {
+            if (videoStream) {
+                videoStream.getTracks().forEach((track) => {
+                    track.stop();
+                });
+                videoElement.srcObject = null;
+                detectionStopped = true; // Stop detection when the camera is stopped
+            }
+        }
+        function getQueryParam(quiz) {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            return urlSearchParams.get(quiz);
+        }
+        function redirectToOtherPage() {
+            const quizParamValue = getQueryParam("quiz");
+
+            const url = "http://127.0.0.1:5500/" + quizParamValue;
+            console.log(url)
+            window.location.href = url;
+        }
+    </script>
+</body>
+
+</html>

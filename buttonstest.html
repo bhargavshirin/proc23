@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz-cloudcomputing</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  /* body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+} */
+
+.custom-alert {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-alert-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+#custom-alert-okay {
+    margin-top: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-left: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50px;
+}
+
+#custom-alert-okay:hover {
+    background-color: #0056b3;
+}
+
+</style>
+</head>
+<body>
+    <div id="custom-alert" class="custom-alert">
+        <div class="custom-alert-content">
+            <span id="custom-alert-message">This is a custom alert.</span>
+            <button id="custom-alert-okay">Okay</button>
+        </div>
+    </div>
+
+    <button id="show-custom-alert">Show Custom Alert</button>
+
+
+  <script>
+
+
+const customAlert = document.getElementById("custom-alert");
+const showAlertButton = document.getElementById("show-custom-alert");
+const customAlertMessage = document.getElementById("custom-alert-message");
+const customAlertOkayButton = document.getElementById("custom-alert-okay");
+
+// Function to show the custom alert
+function showCustomAlert(message) {
+    customAlertMessage.textContent = message;
+    customAlert.style.display = "flex";
+}
+
+// Function to hide the custom alert
+function hideCustomAlert() {
+    customAlert.style.display = "none";
+}
+
+// Event listener for the "Show Custom Alert" button
+showAlertButton.addEventListener("click", () => {
+    showCustomAlert("This is a custom alert.");
+});
+
+// Event listener for the "Okay" button in the custom alert
+customAlertOkayButton.addEventListener("click", hideCustomAlert);
+
+
+   </script> 
+</body>
+</html>

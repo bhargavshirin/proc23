@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ProctoShield</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="slide.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <script>
+   window.addEventListener("DOMContentLoaded", function() {
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        const quizAccessed = sessionStorage.getItem("quizAccessed");
+        const quizentered=localStorage.getItem("QuIzIseNtRED");
+
+        if (user && user.username==="AuThenticatedUser" &&user.role === "AuthUserVerified") {
+            if (quizAccessed === "true") {
+                sessionStorage.removeItem("quizAccessed");
+            } 
+        
+      
+        }
+        else if (quizentered) {
+
+        }
+        
+        else {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    });
+
+</script>
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+
+  
+</head>
+
+<body>
+  <!-- <div id="hiddenDiv"></div> -->
+  <div id="loading-spinner">
+    <span class="spinner-letter">Ps</span>
+  </div>
+  <div id="content" class="blur">
+    <section class="navigation">
+      <div class="nav-container">
+        <div class="brand">
+          <a href="main.html">
+            <h2>ProctoShield</h2>
+          </a>
+        </div>
+  
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        
+        <nav>
+          <ul class="nav-list">
+            <li>
+              <a href="Instruction.html">Instructions</a>
+            </li>
+            <li>
+              <a href="updates.html">Updates</a>
+            </li>
+            <li>
+              <a href="support.html">Support</a>
+            </li>
+            <li>
+              <div class="profile-container">
+                <div class="profile-image">
+                <div id="imageContainer"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <div class="hamburger-menu" id="hamburgerMenu">
+      <ul>
+        <li id="userName"></li>
+        <li id="editprofile"><a href="photo.html">Edit Profile</a></li>
+        <li id="signOutButton"><a>Logout</a></li>
+      </ul>
+    </div>
+    
+    <div class="slide-container">
+     
+      <ul class="nav-list">
+        <li>
+
+          <a href="main.html">
+            <h2 style="font-family: Helvetica; color: #ffffff; font-size: 35px; ">
+              ProctoShield
+            </h2>
+          </a>
+
+      </li>
+        <li> <div id="slideImageContainer"></div></li>
+        
+        <li>
+          <H3><span id="sname-placeholder"></span></H3> 
+       </li>
+       
+     
+       <li>
+        <a href="photo.html">Edit profile</a>
+      </li>
+      <li>
+        <a href="Instruction.html">Instructions</a>
+      </li>
+        <li>
+          <a href="support.html">Support</a>
+        </li>
+        <li>
+          <a id="sign-out-button" href="index.html">Sign Out</a>
+        </li>
+      </ul>
+      
+    </div>
+
+  <div class="quiz-content">
+    <div class="swiper">
+
+      <div class="swiper-wrapper">
+
+        <!-- <div class="swiper-slide"><img src="images/main.png"></div> -->
+        <div class="swiper-slide"><img src="images/1.svg"></div>
+        <div class="swiper-slide"><img src="images/5.svg"></div>
+        <div class="swiper-slide"><img src="images/4.svg"></div>
+        <div class="swiper-slide"><img src="images/3.svg"></div>
+        <div class="swiper-slide"><img src="images/2.svg"></div>
+        <!-- <div class="swiper-slide"><img src="images/6.svg"></div> -->
+
+      </div>
+
+      <div class="swiper-pagination"></div>
+
+      
+    </div>
+
+    <div id="search-bar">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search...">
+      <button id="searchButton">Search</button>
+    </div>
+
+
+    <div class="quiz-options">
+      <div class="quiz-option">
+        <img src="images/cloud.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Cloud Computing</h2>
+        <p class="quiz-description">Test your knowledge of virtualization, scalability, and service models in the world of cloud computing. Explore concepts like SaaS, PaaS, IaaS, and the benefits and challenges of cloud adoption.</p>
+        <p id="attempts-message1"></p>
+        <a href="face_recognition/index.html?quiz=cloudquiz.html" class="quiz-btn">Start Quiz</a>
+
+      </div>
+
+      <div class="quiz-option">
+        <img src="images/computer-network.avif" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Computer Networks</h2>
+        <p class="quiz-description">Dive into the world of networking protocols, OSI model, TCP/IP, and network topologies. Challenge yourself with questions about routing, switching, and network security.</p>
+        <p id="attempts-message2"></p>
+        <a href="face_recognition/index.html?quiz=computernetworks.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/bc.svg" alt="Cloud Computing Quiz" width="150px" height="170px">
+        <h2>Blockchain technology</h2>
+        <p class="quiz-description">Discover the fundamentals of blockchain technology, consensus mechanisms, and smart contracts. Explore the decentralized and secure nature of blockchain systems that underlie cryptocurrencies and beyond.</p>
+        <p id="attempts-message3"></p>
+        <a href="face_recognition/index.html?quiz=blockchain.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/AI.PNG" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Artificial Intelligence</h2>
+        <p class="quiz-description">Explore the realm of AI, from machine learning algorithms to neural networks. Test your understanding of natural language processing, computer vision, and the ethical considerations in AI development.</p>
+        <p id="attempts-message4"></p>
+        <a href="face_recognition/index.html?quiz=ai.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/ds.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Data Science</h2>
+        <p class="quiz-description">Delve into the world of data analysis, statistics, and machine learning. Assess your knowledge of data preprocessing, feature engineering, model evaluation, and data visualization techniques.</p>
+        <p id="attempts-message5"></p>
+        <a href="face_recognition/index.html?quiz=datascience.html" class="quiz-btn">Start Quiz</a>
+      </div>
+
+      <div class="quiz-option">
+        <img src="images/iot.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Internet of Things</h2>
+        <p class="quiz-description">Uncover the interconnected world of IoT devices and sensors. Quiz yourself on protocols, IoT applications, security challenges, and the potential impact of IoT on various industries.</p>
+        <p id="attempts-message6"></p>
+        <a href="face_recognition/index.html?quiz=iot.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/db.svg" alt="Cloud Computing Quiz" width="150px" height="170px">
+        <h2>Database Management</h2>
+        <p class="quiz-description">Test your understanding of database design, normalization, SQL queries, and transaction management. Explore concepts of relational and non-relational databases.</p>
+        <p id="attempts-message7"></p>
+        <a href="face_recognition/index.html?quiz=database.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/da.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Data Analytics</h2>
+        <p class="quiz-description">Take on questions related to extracting insights from data. Evaluate your knowledge of data mining, exploratory data analysis, and the use of analytics tools to drive decision-making.</p>
+        <p id="attempts-message8"></p>
+        <a href="face_recognition/index.html?quiz=dataanalytics.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/quantum.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Quantum Computing</h2>
+        <p class="quiz-description">Embark on a journey into the quantum realm of computation. Challenge your grasp of qubits, superposition, quantum gates, and the potential applications of quantum computing.</p>
+        <p id="attempts-message9"></p>
+        <a href="face_recognition/index.html?quiz=quantum.html" class="quiz-btn">Start Quiz</a>
+      </div>
+
+      <div class="quiz-option">
+        <img src="images/web.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Web Devolopment</h2>
+        <p class="quiz-description">Assess your knowledge of HTML, CSS, JavaScript, and web development frameworks. Test your understanding of front-end and back-end development, as well as responsive design principles.</p>
+        <p id="attempts-message10"></p>
+        <a href="face_recognition/index.html?quiz=webdev.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/c2.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Programming with C</h2>
+        <p class="quiz-description">Gauge your familiarity with the C programming language. Cover topics like data types, control structures, memory management, and pointers.</p>
+        <p id="attempts-message11"></p>
+        <a href="face_recognition/index.html?quiz=c.html" class="quiz-btn">Start Quiz</a>
+      </div>
+      <div class="quiz-option">
+        <img src="images/python.svg" alt="Cloud Computing Quiz" width="200px" height="200px">
+        <h2>Python Programming</h2>
+        <p class="quiz-description">Test your proficiency in Python programming. Explore questions on syntax, data structures, object-oriented programming, and common libraries used in Python development.</p>
+        <p id="attempts-message12"></p>
+        <a href="face_recognition/index.html?quiz=python.html" class="quiz-btn">Start Quiz</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+
+  </section>
+
+  <script src="main.js"></script>
+  <script src="my.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script src="slide.js">  </script>
+  <div class="bottom-bar">
+    <p id="bp">© 2023 ProctoShield - All Rights Reserved.</p>
+  </div>
+</div> 
+</body>
+</html>

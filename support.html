@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/proc.png" type="image/x-icon" />
+    <style>
+        .support-sender {
+            color: #e40808;
+        }
+
+        * {
+            margin: 3px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .chat {
+            background-color: #f4f4f4;
+            border: 1px solid #931414;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        /* Style the chat header */
+        .chat h1 {
+            font-size: 24px;
+            text-align: center;
+            color: #931414;
+        }
+
+        /* Style the chat window */
+        .chat-window {
+            background-color: #f1f0f0;
+            border: 1px solid #931414;
+            border-radius: 5px;
+            margin-top: 2rem;
+            overflow-y: auto;
+            max-height: 450px;
+        }
+
+        /* Style chat messages */
+        .messages {
+            padding: 10px;
+        }
+
+
+        #student-id-input {
+            width: 30%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #000000;
+            background-color: #d5d0d0;
+            /* Light grey background color */
+            border-radius: 5px;
+        }
+
+
+        #message-input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #931414;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        /* Style the go back button */
+        .go-back-btn {
+            background-color: #931414;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 20px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+        }
+
+        /* Style the powered by text */
+        h6 {
+            font-size: 12px;
+            color: #811919;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Add hover effect to buttons */
+        button:hover{
+            background-color: #033e7e;
+        }
+        .go-back-btn:hover {
+            background-color: #780606;
+        }
+
+        /* Add some spacing between elements */
+        .chat h1,
+        h6 {
+            margin-top: 20px;
+        }
+
+        /* Media query for responsiveness */
+        @media (max-width: 600px) {
+            .chat {
+                margin-top: 1rem;
+                max-width: 100%;
+            }
+
+            /* button */
+            button[type="submit"] {
+                width: 100%;
+            }
+
+            .go-back-btn {
+                margin-left: 1.7rem;
+                margin-top: 0.8rem;
+                border-radius: 5px;
+                padding: 10px 15px;
+            }
+        }
+
+        /* You can adjust these styles further to match your desired look and feel. */
+
+        @media screen and (max-width: 600px) {
+            .chat {
+                max-width: 90%;
+            }
+        }
+
+        .timestamp {
+            font-size: 10px;
+            /* Adjust the font size as needed */
+            color: #777;
+            /* Optional: You can change the color to a lighter one */
+        }
+    </style>
+    <title>Student Chat</title>
+</head>
+
+<body>
+    <button class="go-back-btn" onclick="goBack()">X</button>
+    <div class="chat">
+        <h1>Chat Support</h1>
+        <div class="chat-window">
+            <div class="messages" id="messages"></div>
+
+        </div>
+        <form id="message-form">
+            <input type="text" id="student-id-input" placeholder="Enter Your Student ID" required>
+
+            <input type="text" id="message-input" placeholder="Type your message..." required>
+            <button type="submit">Send</button>
+        </form>
+        <h6>Powered by Proctoshield</h6>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase with your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDuWMgZzdi1XUkF5K9n2QJnmNM6nADD0Js",
+            authDomain: "proctoshield-8eaf3.firebaseapp.com",
+            databaseURL: "https://proctoshield-8eaf3-default-rtdb.firebaseio.com",
+            projectId: "proctoshield-8eaf3",
+            storageBucket: "proctoshield-8eaf3.appspot.com",
+            messagingSenderId: "27994814767",
+            appId: "1:27994814767:web:e4cc3c9315633df85949da"
+        };
+
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const messageForm = document.getElementById("message-form");
+        const messageInput = document.getElementById("message-input");
+        const messagesDiv = document.getElementById("messages");
+        const studentIdInput = document.getElementById("student-id-input");
+
+        const storedStudentId = localStorage.getItem('regnumber');
+        if (storedStudentId) {
+            studentIdInput.value = storedStudentId;
+            studentIdInput.disabled = true; // Disable the input field
+        }
+        if (!storedStudentId) {
+            studentIdInput.value = "Anonymous";
+            studentIdInput.disabled = true; // Disable the input field
+        }
+
+        // Function to send a message
+        function sendMessage(sender, receiver, message) {
+            const timestamp = firebase.database.ServerValue.TIMESTAMP;
+            const messageData = {
+                sender: sender,
+                text: message,
+                timestamp: timestamp
+            };
+
+            const studentRef = database.ref(`chats/${receiver}`);
+            studentRef.child("messages").push(messageData);
+        }
+        function displayMessages(receiver) {
+            messagesDiv.innerHTML = "";
+            const studentRef = database.ref(`chats/${receiver}`);
+            studentRef.child("messages").on("child_added", (snapshot) => {
+                const message = snapshot.val();
+                const messageElement = document.createElement("div");
+
+
+                const timestamp = new Date(message.timestamp);
+                const formattedTimestamp = timestamp.toLocaleString();
+
+
+                const senderClass = message.sender === "support@Proctoshield" ? "support-sender" : "";
+
+                messageElement.innerHTML = `<strong class="${senderClass}">${message.sender}:</strong> ${message.text}<br><span class="timestamp">${formattedTimestamp}</span>`;
+                messagesDiv.appendChild(messageElement);
+            });
+        }
+
+
+
+        messageForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const studentId = studentIdInput.value.trim();
+            const message = messageInput.value.trim();
+            if (studentId !== "" && message !== "") {
+                sendMessage(studentId, "admin", message);
+                messageInput.value = "";
+            }
+        });
+        if (storedStudentId || !storedStudentId) {
+            displayMessages("admin");
+        }
+        const goBack = () => {
+            window.history.back();
+        };
+    </script>
+</body>
+
+</html>

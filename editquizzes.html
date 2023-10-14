@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+  <link  type="text/css" rel="stylesheet" href="editquizzes.css">
+
+  <title>Proctoshield | Edit-Quizzes</title>
+</head>
+<body>
+  <div class="header"></div>
+  <button class="go-back-btn" onclick="goBack()">X</button>
+
+  <label for="question-type">Select Question Type:</label>
+  <select id="question-type">
+          <option value="Cloud Computing">Cloud Computing</option>
+          <option value="Computer Networks">Computer Networks</option>
+          <option value="Blockchain Technology">Blockchain Technology</option>
+          <option value="Artificial Intelligence">Artificial Intelligence</option>
+          <option value="Data Science">Data Science</option>
+          <option value="Internet of Things">Internet of Things</option>
+          <option value="Database Management">Database Management</option>
+          <option value="Data Analytics">Data Analytics</option>
+          <option value="Quantum Computing">Quantum Computing</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Programming with C">Programming with C</option>
+          <option value="Python Programming">Python Programming</option>
+
+  </select>
+  <div id="data-list"></div>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+  <script src="editquizzes.js"></script>
+</body>
+</html>

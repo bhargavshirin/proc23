@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+  <title>Student Profiles</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+    
+    .container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+}
+.default-profile-pic {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #ddd; /* Default background color */
+      object-fit: cover;
+      margin: 0 auto;
+      margin-bottom: 10px;
+    }
+.student-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.details {
+  text-align: center;
+}
+
+.name, .roll-number, .email {
+  margin: 5px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px; /* Adjusted cell padding */
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Profile Pic</th>
+          <th>Name</th>
+          <th>Roll Number</th>
+          <th>Email</th>
+          <th colspan="5">Cloud Computing</th>
+          <th colspan="5">Computer Networks</th> <!-- New column for Computer Networks -->
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>Quiz 1</th>
+          <th>Quiz 2</th>
+          <th>Quiz 3</th>
+          <th>Quiz 4</th>
+          <th>Quiz 5</th>
+          <th>Quiz 1</th>
+          <th>Quiz 2</th>
+          <th>Quiz 3</th>
+          <th>Quiz 4</th>
+          <th>Quiz 5</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody"></tbody>
+    </table>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+
+  <script>
+   
+const firebaseConfig = {
+  apiKey: "AIzaSyDuWMgZzdi1XUkF5K9n2QJnmNM6nADD0Js",
+  authDomain: "proctoshield-8eaf3.firebaseapp.com",
+  databaseURL: "https://proctoshield-8eaf3-default-rtdb.firebaseio.com",
+  projectId: "proctoshield-8eaf3",
+  storageBucket: "proctoshield-8eaf3.appspot.com",
+  messagingSenderId: "27994814767",
+  appId: "1:27994814767:web:e4cc3c9315633df85949da"
+};
+
+
+
+firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  
+    const studentTableBody = document.getElementById("studentTableBody");
+
+    function getProfilePicSrc(data) {
+      return data.imageUrl || "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"; // Replace with the default image URL
+    }
+
+    db.collection("emails").get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const data = doc.data();
+
+          const row = document.createElement("tr");
+
+          const profilePicCell = document.createElement("td");
+          const profilePic = document.createElement("img");
+          profilePic.src = getProfilePicSrc(data); // Get the profile picture source
+          profilePic.classList.add("profile-pic");
+          profilePic.onerror = function () {
+            this.src = "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"; 
+            this.classList.remove("profile-pic");
+            this.classList.add("default-profile-pic");
+          };
+          profilePicCell.appendChild(profilePic);
+          row.appendChild(profilePicCell);
+
+          const nameCell = document.createElement("td");
+          nameCell.textContent = data.sname; // Replace with the actual field name
+          row.appendChild(nameCell);
+
+          const rollNumberCell = document.createElement("td");
+          rollNumberCell.textContent = data.regnumber; // Replace with the actual field name
+          row.appendChild(rollNumberCell);
+
+          const emailCell = document.createElement("td");
+          emailCell.textContent = data.email; // Replace with the actual field name
+          row.appendChild(emailCell);
+          
+          const cloudComputingMarks = data.cloudcomputing; 
+          for (const mark of cloudComputingMarks) {
+            const subColumnCell = document.createElement("td");
+            subColumnCell.textContent = mark;
+            row.appendChild(subColumnCell);
+          }
+
+          // Populate Computer Networks quiz marks
+          const computerNetworksMarks = data.computernetworks; 
+          for (const mark of computerNetworksMarks) {
+            const subColumnCell = document.createElement("td");
+            subColumnCell.textContent = mark;
+            row.appendChild(subColumnCell);
+          }
+
+
+          studentTableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+      
+
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/proc.png" type="image/x-icon" />
+  <title>Proctoshield | Quiz Attempts</title>
+  <link rel="stylesheet" href="quizattempts.css">
+</head>
+<body>
+ <button class="go-back-btn" onclick="goBack()">X</button>  
+  <div class="container">
+    <h1>Quiz Attempts</h1>
+
+    <div class="custom-dropdown">
+      <select id="document-select">
+          <option value="Cloud Computing">Cloud Computing</option>
+          <option value="Computer Networks">Computer Networks</option>
+          <option value="Blockchain Technology">Blockchain Technology</option>
+          <option value="Artificial Intelligence">Artificial Intelligence</option>
+          <option value="Data Science">Data Science</option>
+          <option value="Internet of Things">Internet of Things</option>
+          <option value="Database Management">Database Management</option>
+          <option value="Data Analytics">Data Analytics</option>
+          <option value="Quantum Computing">Quantum Computing</option>
+          <option value="Web Devolopment">Web Development</option>
+          <option value="Programming with C">Programming with C</option>
+          <option value="Python Programming">Python Programming</option>
+          <!-- Add more options as needed with corresponding document IDs -->
+      </select>
+      <div id="selected-subject">Subject: Cloud Computing</div>
+  </div>
+
+    
+
+
+    <div id="sheet"></div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+  <script src="quizattempts.js"></script>
+</body>
+</html>
